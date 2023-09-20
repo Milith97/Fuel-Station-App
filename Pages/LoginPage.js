@@ -1,117 +1,170 @@
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Dimensions, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, StatusBar, TextInput, Pressable } from 'react-native'
 import React from 'react'
-import Icon from 'react-native-vector-icons/Feather';
 
-import 'react-native-gesture-handler'
+import * as Animatable from 'react-native-animatable';
+import { useTheme } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-
-const { width, height } = Dimensions.get("window")
-
-
-
-export default function PageOne({ navigation }) {
-
+const SignInPage = ({ navigation }) => {
+    const { colors } = useTheme();
     return (
         <View style={styles.container}>
+            <StatusBar backgroundColor='#626059' barStyle="light-content"></StatusBar>
 
-            <View style={[StyleSheet.absoluteFill]}>
-                <ImageBackground style={styles.backgroundImg}
-                    source={require('../asstes/img/pageoneimg.jpg')} clipPath="url(#clipPathId)">
-                </ImageBackground>
+            <View style={styles.header}>
+                <Animatable.Image
+                    animation="bounceIn"
+                    duraton="1500"
+                    source={require('../asstes/img/pageoneimg.jpg')}
+                    style={styles.logo}
+                    resizeMode="stretch"
+                />
             </View>
 
+            <Animatable.View style={styles.MidleContent} animation="fadeInUpBig">
+                <View style={styles.btncontainer}>
 
-            <View style={{ width: 60, height: 60, justifyContent: 'center', alignSelf: 'center', alignItems: 'center' }}>
-                <TouchableOpacity style={styles.roundButton} onPress={() => { navigation.navigate('PageOne') }}>
-                    <Icon name="x" size={30} color="#000" />
-                </TouchableOpacity>
-            </View>
+                    <View>
+                        <TextInput
+                            style={styles.TextInput}
+                            placeholder="  Email"
+                            placeholderTextColor='#fff'
+                        />
+                    </View>
 
+                    <View >
+                        <TextInput
+                            style={styles.TextInput}
+                            placeholder="  Password"
+                            placeholderTextColor='#fff'
+                        />
+                    </View>
 
-            <View style={styles.btncontainer}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', }}>
-                    <TouchableOpacity style={styles.button1} onPress={() => { navigation.navigate('LoginPage') }}>
-                        <Text style={styles.buttonText}>Log In</Text>
-                    </TouchableOpacity>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', }}>
-                    <TouchableOpacity style={styles.button1} onPress={() => { navigation.navigate('SignInPage') }}>
-                        <Text style={styles.buttonText}>Register</Text>
-                    </TouchableOpacity>
+            </Animatable.View>
+
+            <Animatable.View style={styles.footer} animation="fadeInUpBig">
+                <View style={styles.btnarea}>
+                    <View style={{ flex: 1, }}>
+                        
+                        <TouchableOpacity style={[styles.button, styles.shadowProp]} onPress={() => { navigation.navigate('SignInPage') }}>
+                            <Text style={styles.buttonText}>Log In</Text>
+                        </TouchableOpacity>
+
+                    </View>
+
+                    <View style={{ flex: 0.5, flexDirection: "row",marginTop:'5%' }}>
+                        <Text style={styles.Text1}>
+                            <Text>Dont have an account? </Text>
+                        </Text>
+                        <Pressable onPress={() => { navigation.navigate('LoginPage') }}>
+                            <Text style={styles.Text2}>
+                                <Text>Sign In</Text>
+                            </Text>
+                        </Pressable>
+                    </View>
+
+                    <View style={{ flex: 1, flexDirection: 'row', gap:5}}>
+                        <Icon name="facebook-official" size={30} color="#EF2E1D" > </Icon>
+                        <Icon name="google-plus-square" size={30} color="#EF2E1D"  ></Icon>
+                        <Icon name="linkedin-square" size={30} color="#EF2E1D" ></Icon>
+                    </View>
+
                 </View>
 
-
-            </View>
-        </View >
-
-
-
+            </Animatable.View>
+        </View>
     )
 }
+
+export default SignInPage;
+
+const { height } = Dimensions.get("screen");
+const height_logo = height * 0.48;
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-end',
         backgroundColor: '#BDBDBD'
-
-
     },
-    backgroundImg: {
-        flex: 1,
-        height: height,
-        width: width
-    },
-    button1: {
-        width: 320,
-        height: 52,
-        justifyContent: 'center',
+    header: {
+        flex: 4,
         alignItems: 'center',
-        borderRadius: 20,
-        backgroundColor: '#FF6B3E',
-        margin: 10,
+
+    },
+    MidleContent: {
+        flex: 2,
+
+    },
+    footer: {
+        flex: 1.5,
+
+    },
+
+    btncontainer: {
+        flex: 1,
+        gap: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+
+
+    btnarea: {
+        flex: 1,
+        alignItems: 'center',
+
+
+    },
+    logo: {
+        width: height_logo,
+        height: height_logo,
+        borderBottomRightRadius: 100,
+        borderBottomLeftRadius: 100
+
+    },
+    TextInput: {
+        backgroundColor: '#6E6C6B',
+        height: 50,
+        width: 300,
+        borderRadius: 5,
+        fontSize: 20
 
     },
     buttonText: {
         color: "#ffffff",
         fontSize: 25,
         fontFamily: 'Inder',
-        letterSpacing: 0.5
+        letterSpacing: 0.5,
+
     },
-    btncontainer: {
-        justifyContent: 'center',
-        height: height / 3,
-    },
-    Textinput: {
-        margin: 10,
-        height: 60,
-        width: 350,
-        marginHorizontal: 20,
-        marginVertical: 10,
-        borderRadius: 10,
-        paddingLeft: 10,
-        backgroundColor: '#2D2928',
-        opacity: 0.7,
-        fontSize: 22,
-        fontFamily: 'Marvel-Bold'
-    },
-    button2: {
+    button: {
+        shadowColor: 'rgba(0,0,0, .4)', // IOS
+        shadowOffset: { height: 2, width: 2 }, // IOS
+        shadowOpacity: 6, // IOS
+        shadowRadius: 6, //IOS
+        elevation: 10, // Android
+
         width: 200,
-        height: 52,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        backgroundColor: '#FF6B3E',
-        margin: 10,
-    },
-    roundButton: {
-        width: 50,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 100,
+        borderRadius: 10,
         backgroundColor: '#FF6B3E',
+    },
+    Text1: {
+        fontWeight: '600',
+        fontSize: 15,
+        color: "#000",
 
     },
-})
+    Text2: {
+        fontSize: 15,
+        fontWeight: '600',
+        fontStyle: 'italic',
+        textDecorationLine: 'underline',
+
+    },
+});
