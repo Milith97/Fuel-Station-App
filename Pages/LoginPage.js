@@ -126,6 +126,12 @@ const styles = StyleSheet.create({
 
     },
     TextInput: {
+        shadowColor: 'rgba(0,0,0, .4)', // IOS
+        shadowOffset: { height: 2, width: 2 }, // IOS
+        shadowOpacity: 6, // IOS
+        shadowRadius: 6, //IOS
+        elevation: 20, // Android
+
         backgroundColor: '#6E6C6B',
         height: 50,
         width: 300,
